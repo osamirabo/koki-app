@@ -7,7 +7,8 @@
 <style>
 body {
   font-family: Arial;
-  background: #fff8e1;
+  background: linear-gradient(to bottom, #0d1b2a, #1b263b);
+  color: white;
   text-align: center;
 }
 
@@ -16,76 +17,111 @@ body {
   justify-content: center;
   align-items: center;
   gap: 15px;
+  margin-bottom: 10px;
 }
 
 .header img {
   width: 70px;
-  height: 70px;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 5px gold); }
+  to { filter: drop-shadow(0 0 20px gold); }
 }
 
 h1 {
-  color: #e65100;
+  color: gold;
 }
 
 .subtitle {
-  font-size: 18px;
-  color: #2e7d32;
-  margin-bottom: 10px;
+  color: #ffd166;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
 }
 
 .item {
-  background: white;
-  margin: 10px;
+  background: #1e2a38;
   padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(255,215,0,0.3);
 }
 
 button {
-  background: #ff5722;
-  color: white;
+  background: gold;
+  color: black;
   border: none;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
+  margin-top: 5px;
 }
 
 #cart {
   margin-top: 20px;
-  background: #ffe0b2;
-  padding: 10px;
-  border-radius: 10px;
+  background: #14213d;
+  padding: 15px;
+  border-radius: 15px;
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <!-- Ramadan Lantern -->
-  <img src="https://cdn-icons-png.flaticon.com/512/2935/2935290.png" alt="Ramadan Lantern">
-
+  <img src="https://cdn-icons-png.flaticon.com/512/2935/2935290.png">
+  
   <div>
     <h1>🍗 Koki Mzboot Zbta</h1>
     <div class="subtitle">🌙 رمضان كريم | 🎉 عيد سعيد</div>
   </div>
 
-  <!-- Islamic moon / decoration -->
-  <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="Eid Decoration">
+  <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png">
 </div>
 
+<div class="menu">
+
 <div class="item">
-  <h3>Grilled Chicken - 120 EGP</h3>
+  <h3>Grilled Chicken</h3>
+  <p>120 EGP</p>
   <button onclick="addToCart('Grilled Chicken',120)">Add</button>
 </div>
 
 <div class="item">
-  <h3>Burger - 80 EGP</h3>
+  <h3>Burger</h3>
+  <p>80 EGP</p>
   <button onclick="addToCart('Burger',80)">Add</button>
 </div>
 
 <div class="item">
-  <h3>Pizza - 100 EGP</h3>
+  <h3>Pizza</h3>
+  <p>100 EGP</p>
   <button onclick="addToCart('Pizza',100)">Add</button>
+</div>
+
+<div class="item">
+  <h3>Kids Meal + Toy</h3>
+  <p>3000 EGP</p>
+  <button onclick="addToCart('Kids Meal + Toy',3000)">Add</button>
+</div>
+
+<div class="item">
+  <h3>Kids Meal + Book</h3>
+  <p>200 EGP</p>
+  <button onclick="addToCart('Kids Meal + Book',200)">Add</button>
+</div>
+
+<div class="item">
+  <h3>Egg</h3>
+  <p>100 EGP</p>
+  <button onclick="addToCart('Egg',100)">Add</button>
+</div>
+
 </div>
 
 <div id="cart">
@@ -96,11 +132,9 @@ button {
 </div>
 
 <script>
-let cart = [];
 let total = 0;
 
 function addToCart(item, price){
-  cart.push(item);
   total += price;
 
   let li = document.createElement("li");
