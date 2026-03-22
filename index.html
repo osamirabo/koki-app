@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Koki Mzboot Zbta</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #fff8e1;
+  text-align: center;
+}
+
+h1 {
+  color: #e65100;
+}
+
+.item {
+  background: white;
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+button {
+  background: #ff5722;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#cart {
+  margin-top: 20px;
+  background: #ffe0b2;
+  padding: 10px;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🍗 Koki Mzboot Zbta</h1>
+
+<div class="item">
+  <h3>Grilled Chicken - 120 EGP</h3>
+  <button onclick="addToCart('Grilled Chicken',120)">Add</button>
+</div>
+
+<div class="item">
+  <h3>Burger - 80 EGP</h3>
+  <button onclick="addToCart('Burger',80)">Add</button>
+</div>
+
+<div class="item">
+  <h3>Pizza - 100 EGP</h3>
+  <button onclick="addToCart('Pizza',100)">Add</button>
+</div>
+
+<div id="cart">
+  <h2>🛒 Cart</h2>
+  <ul id="cartItems"></ul>
+  <h3>Total: <span id="total">0</span> EGP</h3>
+  <button onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(item, price){
+  cart.push(item);
+  total += price;
+
+  let li = document.createElement("li");
+  li.innerText = item + " - " + price + " EGP";
+  document.getElementById("cartItems").appendChild(li);
+
+  document.getElementById("total").innerText = total;
+}
+
+function checkout(){
+  alert("✅ Order placed! Total = " + total + " EGP");
+}
+</script>
+
+</body>
+</html>
