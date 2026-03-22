@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Koki Mzboot Zbta v7</title>
+<title>Koki Mzboot Zbta v8</title>
 
 <style>
 body {
@@ -54,6 +54,13 @@ button {
   padding: 10px;
   border-radius: 8px;
   margin-top: 5px;
+}
+
+.remove-btn {
+  background: red;
+  margin-left: 10px;
+  padding: 5px 8px;
+  font-size: 12px;
 }
 
 #cart {
@@ -193,8 +200,20 @@ function addToCart(item, price){
   itemCount++;
 
   let li = document.createElement("li");
-  li.innerText = item + " - " + price + " EGP";
+
+  li.innerHTML = `
+    ${item} - ${price} EGP 
+    <button class="remove-btn" onclick="removeItem(this, ${price})">❌</button>
+  `;
+
   document.getElementById("cartItems").appendChild(li);
+  document.getElementById("total").innerText = total;
+}
+
+function removeItem(button, price){
+  button.parentElement.remove();
+  total -= price;
+  itemCount--;
 
   document.getElementById("total").innerText = total;
 }
