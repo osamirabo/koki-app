@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Koki Mzboot Zbta v4</title>
+<title>Koki Mzboot Zbta v5</title>
 
 <style>
 body {
@@ -117,6 +117,12 @@ button {
 </div>
 
 <div class="item">
+  <h3>French Fries</h3>
+  <p>100 EGP</p>
+  <button onclick="addToCart('French Fries',100)">Add</button>
+</div>
+
+<div class="item">
   <h3>Kids Meal + Toy</h3>
   <p>3000 EGP</p>
   <button onclick="addToCart('Kids Meal + Toy',3000)">Add</button>
@@ -159,7 +165,14 @@ function addToCart(item, price){
 }
 
 function checkout(){
-  alert("✅ Order placed! Total = " + total + " EGP");
+  let confirmOrder = confirm("Do you want to place the order?");
+
+  if(confirmOrder){
+    alert("✅ Order Done Successfully!");
+    clearCart();
+  } else {
+    // Cancel → do nothing (stay on page)
+  }
 }
 
 function clearCart(){
