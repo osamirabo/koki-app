@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Koki Mzboot Zbta v6</title>
+<title>Koki Mzboot Zbta v7</title>
 
 <style>
 body {
@@ -186,9 +186,11 @@ button {
 
 <script>
 let total = 0;
+let itemCount = 0;
 
 function addToCart(item, price){
   total += price;
+  itemCount++;
 
   let li = document.createElement("li");
   li.innerText = item + " - " + price + " EGP";
@@ -198,6 +200,17 @@ function addToCart(item, price){
 }
 
 function checkout(){
+
+  if(itemCount === 0){
+    alert("❌ You must order something first!");
+    return;
+  }
+
+  if(itemCount === 1){
+    alert("⚠️ You must order at least 2 items!");
+    return;
+  }
+
   let confirmOrder = confirm("Do you want to place the order?");
 
   if(confirmOrder){
@@ -226,6 +239,7 @@ function showSuccess(){
 
 function clearCart(){
   total = 0;
+  itemCount = 0;
   document.getElementById("cartItems").innerHTML = "";
   document.getElementById("total").innerText = 0;
 }
