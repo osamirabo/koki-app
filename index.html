@@ -140,7 +140,9 @@ button {
   <h2>🛒 Cart</h2>
   <ul id="cartItems"></ul>
   <h3>Total: <span id="total">0</span> EGP</h3>
+  
   <button onclick="checkout()">Checkout</button>
+  <button onclick="clearCart()" style="background:red;">🗑️ Clear Cart</button>
 </div>
 
 <script>
@@ -158,6 +160,12 @@ function addToCart(item, price){
 
 function checkout(){
   alert("✅ Order placed! Total = " + total + " EGP");
+}
+
+function clearCart(){
+  total = 0;
+  document.getElementById("cartItems").innerHTML = "";
+  document.getElementById("total").innerText = 0;
 }
 </script>
 
