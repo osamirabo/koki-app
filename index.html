@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Koki Mzboot Zbta v5</title>
+<title>Koki Mzboot Zbta v6</title>
 
 <style>
 body {
@@ -61,6 +61,39 @@ button {
   background: #ffe0b2;
   padding: 15px;
   border-radius: 12px;
+}
+
+/* SUCCESS POPUP */
+#successPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.check-circle {
+  width: 90px;
+  height: 90px;
+  background: green;
+  color: white;
+  border-radius: 50%;
+  font-size: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 15px;
 }
 </style>
 </head>
@@ -168,11 +201,27 @@ function checkout(){
   let confirmOrder = confirm("Do you want to place the order?");
 
   if(confirmOrder){
-    alert("✅ Order Done Successfully!");
+    showSuccess();
     clearCart();
-  } else {
-    // Cancel → do nothing (stay on page)
   }
+}
+
+function showSuccess(){
+  let popup = document.createElement("div");
+  popup.id = "successPopup";
+
+  popup.innerHTML = `
+    <div class="popup-content">
+      <div class="check-circle">✔</div>
+      <h2>Order Done Successfully!</h2>
+    </div>
+  `;
+
+  document.body.appendChild(popup);
+
+  setTimeout(() => {
+    popup.remove();
+  }, 2000);
 }
 
 function clearCart(){
