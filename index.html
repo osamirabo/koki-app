@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Koki Mzboot Zbta v8</title>
+<title>Koki Mzboot Zbta v9</title>
 
 <style>
 body {
@@ -191,34 +191,73 @@ button {
   <button onclick="clearCart()" style="background:red;">🗑️ Clear Cart</button>
 </div>
 
-<script>
-let total = 0;
-let itemCount = 0;
+<script type="module">
 
-function addToCart(item, price){
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  push
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* REPLACE WITH YOUR FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyCtfN07wHJaja2Sofz59qCdZ7nWFbiOWqE",
+  authDomain: "koki-mzboot-zbta.firebaseapp.com",
+  databaseURL: "https://koki-mzboot-zbta-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "koki-mzboot-zbta",
+  storageBucket: "koki-mzboot-zbta.firebasestorage.app",
+  messagingSenderId: "912505103789",
+  appId: "1:912505103789:web:bc220a363b7603c1c96d24"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.total = 0;
+window.itemCount = 0;
+window.cart = [];
+
+window.addToCart = function(item, price){
+
   total += price;
   itemCount++;
+
+  cart.push({
+    item: item,
+    price: price
+  });
 
   let li = document.createElement("li");
 
   li.innerHTML = `
-    ${item} - ${price} EGP 
+    ${item} - ${price} EGP
     <button class="remove-btn" onclick="removeItem(this, ${price})">❌</button>
   `;
 
   document.getElementById("cartItems").appendChild(li);
+
   document.getElementById("total").innerText = total;
 }
 
-function removeItem(button, price){
+window.removeItem = function(button, price){
+
+  let itemText = button.parentElement.innerText;
+
+  cart = cart.filter(cartItem =>
+    !(itemText.includes(cartItem.item) && cartItem.price === price)
+  );
+
   button.parentElement.remove();
+
   total -= price;
   itemCount--;
 
   document.getElementById("total").innerText = total;
 }
 
-function checkout(){
+window.checkout = function(){
 
   if(itemCount === 0){
     alert("❌ You must order something first!");
@@ -233,12 +272,21 @@ function checkout(){
   let confirmOrder = confirm("Do you want to place the order?");
 
   if(confirmOrder){
+
+    push(ref(db, "orders"), {
+      items: cart,
+      total: total,
+      itemCount: itemCount,
+      time: new Date().toLocaleString()
+    });
+
     showSuccess();
     clearCart();
   }
 }
 
-function showSuccess(){
+window.showSuccess = function(){
+
   let popup = document.createElement("div");
   popup.id = "successPopup";
 
@@ -256,12 +304,16 @@ function showSuccess(){
   }, 2000);
 }
 
-function clearCart(){
+window.clearCart = function(){
+
   total = 0;
   itemCount = 0;
+  cart = [];
+
   document.getElementById("cartItems").innerHTML = "";
   document.getElementById("total").innerText = 0;
 }
+
 </script>
 
 </body>
