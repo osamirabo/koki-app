@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Koki Mzboot Zbta v11</title>
+<title>Koki Mzboot Zbta v10</title>
 
 <style>
 body {
@@ -202,18 +202,6 @@ box-shadow:0 2px 8px rgba(0,0,0,0.2);
 
 <h2>💬 Chat With Admin</h2>
 
-<button onclick="clearChat()" style="
-background:red;
-color:white;
-border:none;
-padding:8px;
-border-radius:6px;
-margin-bottom:10px;
-cursor:pointer;
-">
-🗑️ Clear Chat
-</button>
-
 <div id="chatBox" style="
 height:200px;
 overflow-y:auto;
@@ -249,8 +237,7 @@ import {
   getDatabase,
   ref,
   push,
-  onValue,
-  remove
+  onValue
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 /* FIREBASE CONFIG */
@@ -384,16 +371,6 @@ window.sendMessage = function(){
   });
 
   input.value = "";
-}
-
-/* CLEAR CHAT */
-window.clearChat = function(){
-
-  let confirmClear = confirm("Clear all chat messages?");
-
-  if(confirmClear){
-    remove(chatRef);
-  }
 }
 
 /* LIVE CHAT */
