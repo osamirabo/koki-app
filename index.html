@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Koki Mzboot Zbta v9</title>
+<title>Koki Mzboot Zbta v10</title>
 
 <style>
 body {
@@ -191,6 +191,44 @@ button {
   <button onclick="clearCart()" style="background:red;">🗑️ Clear Cart</button>
 </div>
 
+<!-- CHAT BOX -->
+<div style="
+background:white;
+padding:15px;
+border-radius:12px;
+margin:20px;
+box-shadow:0 2px 8px rgba(0,0,0,0.2);
+">
+
+<h2>💬 Chat With Admin</h2>
+
+<div id="chatBox" style="
+height:200px;
+overflow-y:auto;
+border:1px solid #ccc;
+padding:10px;
+margin-bottom:10px;
+text-align:left;
+background:#fafafa;
+"></div>
+
+<input id="chatInput" type="text" placeholder="Type message..." style="
+width:70%;
+padding:10px;
+">
+
+<button onclick="sendMessage()" style="
+padding:10px;
+background:#4caf50;
+color:white;
+border:none;
+border-radius:6px;
+">
+Send
+</button>
+
+</div>
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -198,10 +236,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
   getDatabase,
   ref,
-  push
+  push,
+  onValue
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-/* REPLACE WITH YOUR FIREBASE CONFIG */
+/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyCtfN07wHJaja2Sofz59qCdZ7nWFbiOWqE",
   authDomain: "koki-mzboot-zbta.firebaseapp.com",
@@ -214,6 +253,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+
+const chatRef = ref(db, "chat");
 
 window.total = 0;
 window.itemCount = 0;
@@ -313,6 +354,50 @@ window.clearCart = function(){
   document.getElementById("cartItems").innerHTML = "";
   document.getElementById("total").innerText = 0;
 }
+
+/* SEND CHAT MESSAGE */
+window.sendMessage = function(){
+
+  const input = document.getElementById("chatInput");
+
+  const text = input.value.trim();
+
+  if(text === "") return;
+
+  push(chatRef, {
+    sender: "Client",
+    text: text,
+    time: new Date().toLocaleTimeString()
+  });
+
+  input.value = "";
+}
+
+/* LIVE CHAT */
+onValue(chatRef, (snapshot) => {
+
+  const data = snapshot.val();
+
+  const chatBox = document.getElementById("chatBox");
+
+  chatBox.innerHTML = "";
+
+  if(!data) return;
+
+  Object.values(data).forEach(msg => {
+
+    chatBox.innerHTML += `
+      <div style="margin-bottom:10px;">
+        <b>${msg.sender}</b>: ${msg.text}
+        <div style="font-size:12px;color:gray;">
+          ${msg.time}
+        </div>
+      </div>
+    `;
+  });
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+});
 
 </script>
 
