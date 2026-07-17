@@ -142,19 +142,51 @@ box-shadow:0 2px 8px rgba(0,0,0,0.2);
 
 <!-- AD SLIDESHOW -->
 <div style="
+position:relative;
 width:90%;
 margin:15px auto;
 ">
 
 <img id="adImage"
-     src="menu-photo.jpeg"
-     style="
-     width:100%;
-     height:auto;
-     border-radius:15px;
-     box-shadow:0 2px 8px rgba(0,0,0,0.2);
-     display:block;
-     ">
+src="ad1.jpeg"
+style="
+width:100%;
+height:auto;
+border-radius:15px;
+box-shadow:0 2px 8px rgba(0,0,0,.25);
+display:block;
+transition:opacity .4s;
+">
+
+<button onclick="previousAd()" style="
+position:absolute;
+left:10px;
+top:50%;
+transform:translateY(-50%);
+width:42px;
+height:42px;
+border-radius:50%;
+border:none;
+background:rgba(0,0,0,.55);
+color:white;
+font-size:24px;
+cursor:pointer;
+">❮</button>
+
+<button onclick="nextAd()" style="
+position:absolute;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+width:42px;
+height:42px;
+border-radius:50%;
+border:none;
+background:rgba(0,0,0,.55);
+color:white;
+font-size:24px;
+cursor:pointer;
+">❯</button>
 
 </div>
 
@@ -460,13 +492,22 @@ const adImages = [
 
 let currentAd = 0;
 
-setInterval(() => {
+function showAd(){
+    document.getElementById("adImage").src = adImages[currentAd];
+}
 
-  currentAd = (currentAd + 1) % adImages.length;
+window.nextAd = function(){
+    currentAd = (currentAd + 1) % adImages.length;
+    showAd();
+}
 
-  document.getElementById("adImage").src = adImages[currentAd];
+window.previousAd = function(){
+    currentAd = (currentAd - 1 + adImages.length) % adImages.length;
+    showAd();
+}
 
-}, 2000);   // Change every 2 seconds
+// Auto change every 2 seconds
+setInterval(nextAd, 3000);
 
 </script>
 
