@@ -140,19 +140,23 @@ box-shadow:0 2px 8px rgba(0,0,0,0.2);
 🎉👧 عندنا Kids Area 🧒🎉
 </div>
 
-<!-- AD PHOTO SECTION -->
+<!-- AD SLIDESHOW -->
 <div style="
 width:90%;
 margin:15px auto;
 ">
 
-<img src="menu-photo.jpeg" style="
-width:100%;
-height:auto;
-border-radius:15px;
-box-shadow:0 2px 8px rgba(0,0,0,0.2);
-display:block;
-">
+<img id="adImage"
+     src="menu-photo.jpeg"
+     style="
+     width:100%;
+     height:auto;
+     border-radius:15px;
+     box-shadow:0 2px 8px rgba(0,0,0,0.2);
+     display:block;
+     ">
+
+</div>
 
 </div>
 
@@ -436,6 +440,33 @@ onValue(chatRef, (snapshot) => {
 
   chatBox.scrollTop = chatBox.scrollHeight;
 });
+
+  /* ADVERTISEMENT SLIDESHOW */
+
+const adImages = [
+  "menu-photo.jpeg",
+  "ad1.jpeg",
+  "ad2.jpeg",
+  "ad3.jpeg",
+  "ad4.jpeg",
+  "ad5.jpeg",
+  "ad6.jpeg",
+  "ad7.jpeg",
+  "ad8.jpeg",
+  "ad9.jpeg",
+  "ad10.jpeg",
+  "ad11.jpeg"
+];
+
+let currentAd = 0;
+
+setInterval(() => {
+
+  currentAd = (currentAd + 1) % adImages.length;
+
+  document.getElementById("adImage").src = adImages[currentAd];
+
+}, 2000);   // Change every 2 seconds
 
 </script>
 
